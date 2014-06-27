@@ -61,10 +61,11 @@ module Rearview
       def fetch_data(metrics, minutes = nil, to_date = nil)
         logger.debug "#{self} fetch_data"
         encMetrics = metrics.delete_if { |m| m.empty? }.map { |m| URI.escape(m) }
-        from, to   = create_from_to_dates(minutes, to_date)
+        from, to, tz = create_from_to_dates(minutes, to_date)
         params = {}.tap do |h|
           h["from"] = from
           h["until"] = to
+          h["tz"] = tz
           h["format"] = "raw"
           h["target"] = metrics.delete_if { |m| m.empty? }
         end
@@ -260,14 +261,14 @@ module Rearview
         incoming_date_format = '%m/%d/%Y %H:%M'
         mins = minutes.nil? ? @@DEFAULT_MINUTES : minutes.to_i
         if to_date == "now" || to_date.nil?
-          now = Time.now.gmtime
+          now = Time.zone.now
         else
           now = DateTime.strptime(to_date, incoming_date_format)
         end
         to = (now - 1.minutes).strftime(graphite_date_format)
         from = (now - (mins + 1).minutes).strftime(graphite_date_format)
         logger.debug "#{self}#create_from_to_dates from:#{from} to:#{to}"
-        [from,to]
+        [from,to,URI.escape(Time.zone.name)]
       end
 
     end
