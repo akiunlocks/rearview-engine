@@ -16,10 +16,10 @@ module Graphite
       end
     end
     def render(params={})
-      connection.get('/render',params)
+      connection.get('render',params)
     end
     def find_metric(metric)
-      connection.get('/metrics/find',{ query: metric })
+      connection.get('metrics/find',{ query: metric })
     end
     def metric_exists?(metric)
       exists = false
@@ -34,7 +34,7 @@ module Graphite
     def reachable?
       reachable = false
       begin
-        response = connection.get('/render')
+        response = connection.get('render')
         reachable = response.status==200 && response.headers['content-type'].include?('image/png') && response.body.length > 0
       rescue Exception => e
       end
