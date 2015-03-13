@@ -10,7 +10,10 @@ module Graphite
         ca_file: File.expand_path('../cacerts.pem', __FILE__)
       }
       basic_auth = options.delete(:basic_auth)
-      @connection = Faraday.new(default_options.merge(options))
+      @connection = Faraday.new(default_options.merge(options)) do |faraday|
+        faraday.response :logger
+        faraday.adapter Faraday.default_adapter
+      end
       if basic_auth.present?
         @connection.basic_auth(basic_auth[:user],basic_auth[:password])
       end
