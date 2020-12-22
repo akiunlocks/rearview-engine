@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    i18n (0.6.5)
+    i18n (0.6.8)
     json (1.8.0)
     json (1.8.0-java)
     multi_json (1.8.1)
@@ -11,6 +11,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  i18n (~> 0.6.5)
+  i18n (~> 0.6.8)
   json
   multi_json (~> 1.8.1)

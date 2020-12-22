@@ -4,4 +4,4 @@ source 'https://rubygems.org'
 
 gem 'json'
 gem 'multi_json', '~> 1.8.1'
-gem 'i18n', '~> 0.6.5'
+gem 'i18n', '~> 0.6.8'
